@@ -1,8 +1,15 @@
+Docker builds using api-reference-react will fail in docker.
+
 App created with: `bun create next-app bun-broken`
 Docker configs from Next.js https://github.com/vercel/next.js/tree/canary/examples/with-docker
+Created a simple api-reference-react from: https://scalar.com/products/api-references/integrations/react
 
-Reproduce:
-- `make docker`
+# Reproduce:
+- `git clone https://github.com/useafterfree/bun-broken`
+- `make install`
+- `make normal`
+- `make bun`
+
 
 - this will fail with @scalar/api-reference-react @0.8.31:
 ```
@@ -25,11 +32,14 @@ Reproduce:
 
 - this will pass with @scalar/api-reference-react @0.8.30 :)
 
+
+
+
 Suspected change:
 https://github.com/scalar/scalar/pull/7850/changes#diff-d290037d845ab20c4eecb755b020dc41711c07175c526e6be1e57d965b68c338
 
 Specifically:
 https://github.com/scalar/scalar/pull/7850/changes#diff-d290037d845ab20c4eecb755b020dc41711c07175c526e6be1e57d965b68c338R1
 
-It appears `@scalar/helpers/url/redirect-to-proxy` is not exported in `@scalar/helpers` properly, or in a way the bun does not understand.
+It appears `@scalar/helpers/url/redirect-to-proxy` is not exported in `@scalar/helpers` properly, or in a way the bun or node understands.
 
